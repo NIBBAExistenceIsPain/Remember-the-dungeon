@@ -11,6 +11,9 @@ public class MapController : MonoBehaviour {
     private Facing f;
 
     [SerializeField]
+    private GameObject hint;
+
+    [SerializeField]
     private Vector2 MapSize;
     [SerializeField]
     private Sprites Sprites;
@@ -40,19 +43,52 @@ public class MapController : MonoBehaviour {
 
     public void Move()
     {
+        hint.SetActive(false);
         switch (f)
         {
             case Facing.N:
-                CurrentLocation.x--;
-                break;
+                if (Map[(int)CurrentLocation.x - 1, (int)CurrentLocation.y] != 0)
+                {
+                    CurrentLocation.x--;
+                    if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
+                    {
+                        hint.SetActive(true);
+
+                    }
+                }
+                    break;
             case Facing.W:
-                CurrentLocation.y--;
+                if (Map[(int)CurrentLocation.x, (int)CurrentLocation.y - 1] != 0 )
+                {
+                    CurrentLocation.y--;
+                    if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
+                    {
+                        hint.SetActive(true);
+
+                    }
+                }
                 break;
             case Facing.S:
-                CurrentLocation.x++;
+                if (Map[(int)CurrentLocation.x + 1, (int)CurrentLocation.y] != 0 )
+                {
+                    CurrentLocation.x++;
+                    if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
+                    {
+                        hint.SetActive(true);
+
+                    }
+                }
                 break;
             case Facing.E:
-                CurrentLocation.y++;
+                if (Map[(int)CurrentLocation.x, (int)CurrentLocation.y + 1] != 0)
+                {
+                    CurrentLocation.y++;
+                    if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
+                    {
+                        hint.SetActive(true);
+
+                    }
+                }
                 break;
         }
         LoadNewSprite();
@@ -66,7 +102,15 @@ public class MapController : MonoBehaviour {
             f = Facing.N;
         else
             f++;
+        if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
+        {
+            hint.SetActive(true);
 
+        }
+        else
+        {
+            hint.SetActive(false);
+        }
         LoadNewSprite();
     }
 
@@ -78,7 +122,15 @@ public class MapController : MonoBehaviour {
         else
             f--;
 
+        if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
+        {
+            hint.SetActive(true);
 
+        }
+        else
+        {
+            hint.SetActive(false);
+        }
         LoadNewSprite();
     }
 
@@ -87,8 +139,6 @@ public class MapController : MonoBehaviour {
         bool r = false;
         bool u = false;
         bool l = false;
-        Debug.Log(f);
-        Debug.Log(CurrentLocation.x + " " + CurrentLocation.y);
         switch (f)
         {
             case Facing.N:
@@ -97,9 +147,9 @@ public class MapController : MonoBehaviour {
                 r = Map[(int)CurrentLocation.x, (int)CurrentLocation.y + 1] != 0;
                 break;
             case Facing.W:
-                l = Map[(int)CurrentLocation.x - 1, (int)CurrentLocation.y] != 0;
+                r = Map[(int)CurrentLocation.x - 1, (int)CurrentLocation.y] != 0;
                 u = Map[(int)CurrentLocation.x, (int)CurrentLocation.y - 1 ] != 0;
-                r = Map[(int)CurrentLocation.x + 1, (int)CurrentLocation.y ] != 0;
+                l = Map[(int)CurrentLocation.x + 1, (int)CurrentLocation.y ] != 0;
                 break;
             case Facing.S:
                 l = Map[(int)CurrentLocation.x, (int)CurrentLocation.y + 1] != 0;
@@ -107,11 +157,13 @@ public class MapController : MonoBehaviour {
                 r = Map[(int)CurrentLocation.x, (int)CurrentLocation.y - 1] != 0;
                 break;
             case Facing.E:
-                l = Map[(int)CurrentLocation.x + 1, (int)CurrentLocation.y] != 0;
+                r = Map[(int)CurrentLocation.x + 1, (int)CurrentLocation.y] != 0;
                 u = Map[(int)CurrentLocation.x, (int)CurrentLocation.y + 1] != 0;
-                r = Map[(int)CurrentLocation.x - 1, (int)CurrentLocation.y] != 0;
+                l = Map[(int)CurrentLocation.x - 1, (int)CurrentLocation.y] != 0;
                 break;
         }
+        Debug.Log(r + " " + u + " " + l);
+        Debug.Log(f);
 
         //Based on L U and R load new sprite
         if (r && u && l)
@@ -131,6 +183,7 @@ public class MapController : MonoBehaviour {
         else if (!r && !u && !l)
             MapSprite.GetComponent<SpriteRenderer>().sprite = null;
 
+        
 
 
     }
