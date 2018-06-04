@@ -6,7 +6,7 @@ public class NewBehaviourScript : MonoBehaviour {
 
     [SerializeField]
     private GameObject hint;
-
+    public HintManager manager;
 
     // Use this for initialization
     void Start () {
@@ -21,6 +21,7 @@ public class NewBehaviourScript : MonoBehaviour {
     public void Killme()
     {
         this.gameObject.SetActive(false);
+        manager.setRead(0);
         hint.SetActive(false);
     }
 }

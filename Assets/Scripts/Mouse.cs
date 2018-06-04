@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class Mouse : MonoBehaviour {
     [SerializeField]
     private GameObject hint;
+    public HintManager manager;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -18,8 +19,7 @@ public class Mouse : MonoBehaviour {
 	}
     void OnMouseDown()
     {
+        hint.transform.GetChild(1).GetComponent<Text>().text = manager.getText(0);
         hint.SetActive(true);
-        hint.transform.GetChild(1).GetComponent<Text>().text = "babababababa";
-        
     }
 }

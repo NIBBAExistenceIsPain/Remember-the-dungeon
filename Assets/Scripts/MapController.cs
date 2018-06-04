@@ -5,20 +5,23 @@ using UnityEngine;
 public class MapController : MonoBehaviour {
    
     private enum Tile {Empty, N, S, W, E, NS, NE, NW, SW, SE, WE, NSW, NSE, NWE, SWE, NSWE}
-    private int[,] Map;
     private Vector2 CurrentLocation;
     private enum Facing { N, W, S, E };
     private Facing f;
+    private int[,] Map;
 
     [SerializeField]
-    private GameObject hint;
+    private HintManager hintManager;
 
-    [SerializeField]
-    private Vector2 MapSize;
+
     [SerializeField]
     private Sprites Sprites;
+
     [SerializeField]
     private GameObject MapSprite;
+
+    [SerializeField]
+    private GameObject pword;
 
 
 
@@ -30,68 +33,88 @@ public class MapController : MonoBehaviour {
 
     private void Populate()
     {
-        f = Facing.N;
-        CurrentLocation = new Vector2(5, 2);
-        Map = new int[,] {{0,0,0,0,0},
-                          {0,1,1,1,0},
-                          {0,1,0,0,0},
-                          {0,1,1,0,0},
-                          {0,0,1,1,0},
-                          {0,0,1,0,0},
-                          {0,0,0,0,0}};
+        f = Facing.S;
+        CurrentLocation = new Vector2(15,2);
+
+        //So umm... You see.... This was done with a...
+        // Map generator, YAS!
+
+
+        Map = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+                          {0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+                          {0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+                          {0,0,0,1,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+                          {0,0,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0},
+                          {0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0},
+                          {0,0,0,0,1,0,0,0,1,1,1,0,0,1,1,1,1,1,1,0,0,0,1,1,1,0,1,0,0,0},
+                          {0,0,1,0,1,0,0,0,1,0,1,1,0,1,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0,0},
+                          {0,0,1,0,1,0,0,0,1,0,0,1,1,1,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0},
+                          {0,0,1,1,1,1,1,1,1,1,0,1,0,0,0,1,0,0,1,0,0,0,1,1,1,1,1,0,0,0},
+                          {0,0,1,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+                          {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,1,1,1,0},
+                          {0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0},
+                          {0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,0,0,1,1,1,1,1,0,0,1,0},
+                          {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
     }
 
     public void Move()
     {
-        hint.SetActive(false);
+        
+       
         switch (f)
         {
             case Facing.N:
                 if (Map[(int)CurrentLocation.x - 1, (int)CurrentLocation.y] != 0)
                 {
                     CurrentLocation.x--;
-                    if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
-                    {
-                        hint.SetActive(true);
+                  
+                    hintManager.ShowHint(CurrentLocation, (int)f);
 
-                    }
                 }
                     break;
             case Facing.W:
                 if (Map[(int)CurrentLocation.x, (int)CurrentLocation.y - 1] != 0 )
                 {
                     CurrentLocation.y--;
-                    if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
-                    {
-                        hint.SetActive(true);
 
-                    }
+                        hintManager.ShowHint(CurrentLocation, (int)f);
                 }
                 break;
             case Facing.S:
                 if (Map[(int)CurrentLocation.x + 1, (int)CurrentLocation.y] != 0 )
                 {
                     CurrentLocation.x++;
-                    if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
-                    {
-                        hint.SetActive(true);
 
-                    }
+                        hintManager.ShowHint(CurrentLocation, (int)f);
+
                 }
                 break;
             case Facing.E:
                 if (Map[(int)CurrentLocation.x, (int)CurrentLocation.y + 1] != 0)
                 {
                     CurrentLocation.y++;
-                    if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
-                    {
-                        hint.SetActive(true);
 
-                    }
+                        hintManager.ShowHint(CurrentLocation, (int)f);
+
                 }
                 break;
         }
+        if (CurrentLocation.x == 8 && CurrentLocation.y == 18)
+            pword.SetActive(true);
+        else
+            pword.SetActive(false);
         LoadNewSprite();
+        //Debug.Log(CurrentLocation.x + " " + CurrentLocation.y);
 
     }
 
@@ -102,15 +125,9 @@ public class MapController : MonoBehaviour {
             f = Facing.N;
         else
             f++;
-        if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
-        {
-            hint.SetActive(true);
 
-        }
-        else
-        {
-            hint.SetActive(false);
-        }
+        hintManager.ShowHint(CurrentLocation, (int)f);
+
         LoadNewSprite();
     }
 
@@ -122,15 +139,8 @@ public class MapController : MonoBehaviour {
         else
             f--;
 
-        if (CurrentLocation.x == 4 && CurrentLocation.y == 2 && f == Facing.W)
-        {
-            hint.SetActive(true);
+        hintManager.ShowHint(CurrentLocation, (int)f);
 
-        }
-        else
-        {
-            hint.SetActive(false);
-        }
         LoadNewSprite();
     }
 
@@ -162,8 +172,8 @@ public class MapController : MonoBehaviour {
                 l = Map[(int)CurrentLocation.x - 1, (int)CurrentLocation.y] != 0;
                 break;
         }
-        Debug.Log(r + " " + u + " " + l);
-        Debug.Log(f);
+        //Debug.Log(r + " " + u + " " + l);
+        //Debug.Log(f);
 
         //Based on L U and R load new sprite
         if (r && u && l)
