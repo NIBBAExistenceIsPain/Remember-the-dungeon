@@ -1062,6 +1062,7 @@ MonoBehaviour:
   hintManager: {fileID: 974768417}
   Sprites: {fileID: 2065407518}
   MapSprite: {fileID: 1838034104}
+  pword: {fileID: 1632292904}
 --- !u!4 &1315198234
 Transform:
   m_ObjectHideFlags: 0
@@ -1163,7 +1164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1632292905
 Transform:
   m_ObjectHideFlags: 0
