@@ -36,8 +36,8 @@ namespace Assets.Scripts
         {
             Random rng = new Random();
             EnemyType type;
-            if (rng.Next(2) == 1) type = EnemyType.Slime;
-            else type = EnemyType.Skelly;
+            if (rng.Next(3) == 1) type = EnemyType.Skelly;
+            else type = EnemyType.Slime;
             return new Enemy(rng.Next(2, 4), 1, rng.Next(2, 5), rng.Next(1, 2), type);
         }
 

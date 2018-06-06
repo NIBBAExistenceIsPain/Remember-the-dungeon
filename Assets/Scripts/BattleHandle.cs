@@ -376,7 +376,7 @@ public class BattleHandle : MonoBehaviour {
             case EnemyType.BossBoss:
                 return canvas.GetComponent<AnimatorsStorage>().boss;
             default:
-                return canvas.GetComponent<AnimatorsStorage>().slime;
+                return canvas.GetComponent<AnimatorsStorage>().skelliBoy;
 
         }
     }
