@@ -341,6 +341,11 @@ Prefab:
       propertyPath: m_FontData.m_MinSize
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114212891308139534, guid: 6b6ddfae52e10c142bace07f300d79ed,
+        type: 2}
+      propertyPath: m_Text
+      value: Close
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6b6ddfae52e10c142bace07f300d79ed, type: 2}
   m_IsPrefabParent: 0
@@ -811,12 +816,14 @@ MonoBehaviour:
   - {x: 11, y: 3}
   - {x: 22, y: 18}
   - {x: 14, y: 22}
-  IsRead: 000000
+  - {x: 15, y: 2}
+  IsRead: 00000000
   HintText:
   - Backtrack south to find the first guadrian!
   - If there were no wall the path to the next key would be only forward
   - The last key is on the opposite end of the previous fork.
-  Facing: 010000000300000001000000
+  - Right Mid Left
+  Facing: 01000000030000000100000000000000
 --- !u!4 &974768418
 Transform:
   m_ObjectHideFlags: 0
@@ -1176,7 +1183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1632292905
 Transform:
   m_ObjectHideFlags: 0
@@ -1813,7 +1820,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2108244564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.13, y: 3.09, z: -9.4}
+  m_LocalPosition: {x: -5.13, y: 3.09, z: 1}
   m_LocalScale: {x: 0.9353965, y: 0.8885685, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
