@@ -25,6 +25,8 @@ public class Mouse : MonoBehaviour {
             hint.transform.GetChild(1).GetComponent<Text>().text = manager.getText(1);
         if (GameManager.player.CurrentLocation.x == 14 && GameManager.player.CurrentLocation.y == 22)
             hint.transform.GetChild(1).GetComponent<Text>().text = manager.getText(2);
+        if (GameManager.player.CurrentLocation.x == 15 && GameManager.player.CurrentLocation.y == 2)
+            hint.transform.GetChild(1).GetComponent<Text>().text = manager.getText(3s);
         hint.SetActive(true);
     }
 }

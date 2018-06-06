@@ -27,6 +27,8 @@ public class NewBehaviourScript : MonoBehaviour {
             manager.setRead(1);
         if (GameManager.player.CurrentLocation.x == 14 && GameManager.player.CurrentLocation.y == 22)
             manager.setRead(2);
+        if (GameManager.player.CurrentLocation.x == 15 && GameManager.player.CurrentLocation.y == 2)
+            manager.setRead(3);
         hint.SetActive(false);
     }
 }
