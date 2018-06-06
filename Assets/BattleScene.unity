@@ -856,7 +856,6 @@ GameObject:
   m_Component:
   - component: {fileID: 594671594}
   - component: {fileID: 594671590}
-  - component: {fileID: 594671593}
   - component: {fileID: 594671592}
   - component: {fileID: 594671591}
   m_Layer: 0
@@ -886,7 +885,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13.518509
+  orthographic size: 2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -910,13 +909,6 @@ AudioListener:
   m_GameObject: {fileID: 594671589}
   m_Enabled: 1
 --- !u!124 &594671592
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 594671589}
-  m_Enabled: 1
---- !u!92 &594671593
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1288,8 +1280,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 733574480}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.096, y: -0.073, z: 10}
-  m_LocalScale: {x: 14.675549, y: 16.000292, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children:
   - {fileID: 1934263645}
   - {fileID: 1082181764}
