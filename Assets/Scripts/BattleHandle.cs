@@ -25,6 +25,7 @@ public class BattleHandle : MonoBehaviour {
     float speed;
 
     Player player;
+    Enemy enemy;
     FightMoves[] playerMoves;
     FightMoves[] enemyMoves;
     public Animator patternAnimator;
@@ -48,32 +49,34 @@ public class BattleHandle : MonoBehaviour {
         enemyHitpoints = enemy.hitPoints;
         speed = enemy.speed;
         playerMoves = new FightMoves[moveC];
-        enemyMoves = RandomPattern(moveC);
+        enemyMoves = new FightMoves[moveC];
         this.player = player;
+        this.enemy = enemy;
         playerHearths.text = player.GetHealth().ToString();
         enemyHearths.text = enemyHitpoints.ToString();
     }
 
 	void Start () {
-        //if (!GameManager.started) return;
+        if (!GameManager.started) return;
         canvas = FindObjectOfType<Canvas>();
         actionDelay = 2;
         playerC = 0;
         playerHearths = canvas.transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>();
         enemyHearths = canvas.transform.GetChild(0).GetChild(1).GetChild(3).GetComponent<Text>();
         counter = canvas.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>();
-        //SetUpBattle(GameManager.enemy, GameManager.player);
-        SetUpBattle(new Enemy(3, 1, 3, 1, EnemyType.Skelly), new Player("Clericus", 5));
-        enemyPlace.GetComponent<Animator>().runtimeAnimatorController = ConvertTypeController(EnemyType.Skelly);
+        SetUpBattle(GameManager.enemy, GameManager.player);
+        //SetUpBattle(Enemy.GenerateEnemy(), new Player("Steve", 5));
+        enemyPlace.GetComponent<Animator>().runtimeAnimatorController = ConvertTypeController(enemy.type);
     }
 	
 	void Update () {
-        //if (!GameManager.started) return;
+        if (!GameManager.started) return;
         if (myTurn == false)
         {
             if (!animating)
             {
                 animating = true;
+                enemyMoves = RandomPattern(moveC);
                 StartCoroutine(EnemyActions(enemyMoves));
             }
         }
@@ -134,10 +137,10 @@ public class BattleHandle : MonoBehaviour {
     IEnumerator EnemyActions(FightMoves[] moves) 
     {
         counter.text = moveC.ToString();
-        //Debug.Log("Starting co-routine");
+        patternAnimator.SetFloat("Speed", enemy.speed);
+        yield return new WaitForSeconds(5);
         for (int j=0;j<moveC;j++)
         {
-            //Debug.Log(enemyArray[j]);
             switch (moves[j])
             {
                 case FightMoves.AttackUp:
@@ -307,18 +310,19 @@ public class BattleHandle : MonoBehaviour {
                     }
                     break;
             }
-            Debug.Log("Enemy move: " + enemyMoves[j] + ", your move: " + playerMoves[j]);
+            //Debug.Log("Enemy move: " + enemyMoves[j] + ", your move: " + playerMoves[j]);
             enemyHearths.text = enemyHitpoints.ToString();
             playerHearths.text = player.GetHealth().ToString();
             if(enemyHitpoints == 0)
             {
                 vScreen.gameObject.SetActive(true);
-                StopCoroutine("ExecuteMoves");
+                StopAllCoroutines();
+
             }
             if(player.GetHealth() == 0)
             {
                 dScreen.gameObject.SetActive(true);
-                StopCoroutine("ExecuteMoves");
+                StopAllCoroutines();
             }
         }
         yield return new WaitForSeconds(actionDelay);

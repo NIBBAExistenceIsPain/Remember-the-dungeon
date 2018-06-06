@@ -31,5 +31,26 @@ namespace Assets.Scripts
             this.speed = speed;
             this.type = type;
         }
+
+        public static Enemy GenerateEnemy()
+        {
+            Random rng = new Random();
+            EnemyType type;
+            if (rng.Next(2) == 1) type = EnemyType.Slime;
+            else type = EnemyType.Skelly;
+            return new Enemy(rng.Next(2, 4), 1, rng.Next(2, 5), rng.Next(2), type);
+        }
+
+        public static Enemy GenerateMiniBoss(EnemyType boss)
+        {
+            Random rng = new Random();
+            return new Enemy(rng.Next(4, 6), 1, rng.Next(6, 12), rng.Next(2, 3), boss);
+        }
+
+        public static Enemy GenerateBoss()
+        {
+            return new Enemy(12, 1, 25, 4, EnemyType.BossBoss);
+        }
+
     }
 }
