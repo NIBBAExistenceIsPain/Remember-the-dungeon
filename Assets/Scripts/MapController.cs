@@ -46,7 +46,7 @@ public class MapController : MonoBehaviour {
         Map = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                           {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
                           {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
-                          {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0},
+                          {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,5,0,1,0,0,0,0,0,0,0,0},
                           {0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
                           {0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
                           {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -56,7 +56,7 @@ public class MapController : MonoBehaviour {
                           {0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
                           {0,0,0,1,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
                           {0,0,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0},
-                          {0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0},
+                          {0,0,0,0,1,0,0,0,1,0,0,3,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0},
                           {0,0,0,0,1,0,0,0,1,1,1,0,0,1,1,1,1,1,1,0,0,0,1,1,1,0,1,0,0,0},
                           {0,0,1,0,1,0,0,0,1,0,1,1,0,1,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0,0},
                           {0,0,1,0,1,0,0,0,1,0,0,1,1,1,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0},
@@ -64,8 +64,8 @@ public class MapController : MonoBehaviour {
                           {0,0,1,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
                           {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
                           {0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,1,1,1,0},
-                          {0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0},
-                          {0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,0,0,1,1,1,1,1,0,0,1,0},
+                          {0,0,0,0,0,0,0,0,1,2,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0},
+                          {0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,0,0,1,1,1,1,1,0,0,4,0},
                           {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0},
                           {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
     }
@@ -74,6 +74,8 @@ public class MapController : MonoBehaviour {
     {
         var CurrentLocation = player.CurrentLocation;
         var f = player.FacingDirection;
+        if (CurrentLocation.x == 8 && CurrentLocation.y == 18 && !Screeee.open && f.Equals(Facing.N))
+            return;
         switch (f)
         {
             case Facing.N:
@@ -81,7 +83,7 @@ public class MapController : MonoBehaviour {
                 {
                     CurrentLocation.x--;
                     player.CurrentLocation = CurrentLocation;
-
+                    CheckSpawn();
                     hintManager.ShowHint(CurrentLocation, (int)f);
 
                 }
@@ -91,7 +93,7 @@ public class MapController : MonoBehaviour {
                 {
                     CurrentLocation.y--;
                     player.CurrentLocation = CurrentLocation;
-
+                    CheckSpawn();
                     hintManager.ShowHint(CurrentLocation, (int)f);
                 }
                 break;
@@ -102,7 +104,7 @@ public class MapController : MonoBehaviour {
                     player.CurrentLocation = CurrentLocation;
 
                     hintManager.ShowHint(CurrentLocation, (int)f);
-
+                    CheckSpawn();
                 }
                 break;
             case Facing.E:
@@ -112,7 +114,7 @@ public class MapController : MonoBehaviour {
                     player.CurrentLocation = CurrentLocation;
 
                     hintManager.ShowHint(CurrentLocation, (int)f);
-
+                    CheckSpawn();
                 }
                 break;
         }
@@ -121,6 +123,7 @@ public class MapController : MonoBehaviour {
         else
             pword.SetActive(false);
         LoadNewSprite();
+        
         //Debug.Log(CurrentLocation.x + " " + CurrentLocation.y);
 
     }
@@ -204,6 +207,40 @@ public class MapController : MonoBehaviour {
 
         
 
+
+    }
+    private void CheckSpawn()
+    {
+        var CurrentLocation = player.CurrentLocation;
+        int a = Map[(int)CurrentLocation.x, (int)CurrentLocation.y];
+        System.Random rnd = new System.Random();
+        if (a > 1)
+        {
+            switch (a)
+            {
+                case 2:
+                    GameManager.Battle(Enemy.GenerateMiniBoss(EnemyType.BlueBoss));
+                    break;
+                case 3:
+                    GameManager.Battle(Enemy.GenerateMiniBoss(EnemyType.RedBoss));
+                    break;
+                case 4:
+                    GameManager.Battle(Enemy.GenerateMiniBoss(EnemyType.GreenBoss));
+                    break;
+                case 5:
+                    GameManager.Battle(Enemy.GenerateBoss());
+                    break;
+
+            }
+        }
+        else
+        {
+
+            if (rnd.Next(1, 100) > 90)
+            {
+                GameManager.Battle(Enemy.GenerateEnemy());
+            }
+        }
 
     }
 }

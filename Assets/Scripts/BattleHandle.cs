@@ -93,6 +93,16 @@ public class BattleHandle : MonoBehaviour {
         }
     }
 
+    public void Win()
+    {
+        GameManager.BackToMap();
+    }
+
+    public void Lose()
+    {
+        GameManager.Defeat();
+    }
+
     public void InputRegister(int index)
     {
         if (!myTurn) return;

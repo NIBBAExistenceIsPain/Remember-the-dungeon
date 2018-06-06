@@ -32,21 +32,28 @@ public class GameManager : MonoBehaviour
         MainMenu();
     }
 
-    private void OnLevelWasLoaded(int level)
-    {
-
-    }
-
     public static void Play(string playerName)
     {
-        player = new Player(playerName, 3);
+        player = new Player(playerName, 5);
         SceneManager.LoadScene(3);
+    }
+
+    public static void BackToMap()
+    {
+        SceneManager.LoadScene(1);
     }
 
     public static void StartGame()
     {
-        
         SceneManager.LoadScene(1);
+    }
+
+    public static void Defeat()
+    {
+        player = null;
+        enemy = null;
+        started = false;
+        SceneManager.LoadScene(0);
     }
 
     public static void MainMenu()
