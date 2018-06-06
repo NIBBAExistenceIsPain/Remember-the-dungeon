@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+
+
     public static void Defeat()
     {
         player = null;

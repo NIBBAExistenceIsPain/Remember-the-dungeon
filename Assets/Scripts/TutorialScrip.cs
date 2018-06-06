@@ -52,7 +52,7 @@ public class TutorialScrip : MonoBehaviour
                 tutText.text = "You have to remember the attacks of your opponent and do the exact opposite using the action buttons shown on screen to succed in combat.";
                 break;
             case 7:
-                tutText.text = "For example if you know that the enemy will attack from above on turn one you have to instead block from the same direction";
+                tutText.text = "For example if you know that the enemy will attack from above on turn one you have to instead block from below";
                 break;
             case 8:
                 tutText.text = "Defeat all three key masters to gain entry into the guardian room";
