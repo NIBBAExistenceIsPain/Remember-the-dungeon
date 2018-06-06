@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MapTesting.unity
     guid: c5d63721223197a449938d8e2f2cd256
+  - enabled: 1
+    path: Assets/BattleScene.unity
+    guid: e1a862f0731890b4696a95f2217e787e

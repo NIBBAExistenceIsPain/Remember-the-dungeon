@@ -1,18 +1,17 @@
-﻿using System.Collections;
+﻿using Assets.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Facing { N, W, S, E };
+
 public class MapController : MonoBehaviour {
-   
-    private enum Tile {Empty, N, S, W, E, NS, NE, NW, SW, SE, WE, NSW, NSE, NWE, SWE, NSWE}
-    private Vector2 CurrentLocation;
-    private enum Facing { N, W, S, E };
-    private Facing f;
+
     private int[,] Map;
+    private Player player;
 
     [SerializeField]
     private HintManager hintManager;
-
 
     [SerializeField]
     private Sprites Sprites;
@@ -27,16 +26,20 @@ public class MapController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        if (!GameManager.started) return;
         Populate();
+        SetPlayer(GameManager.player);
         LoadNewSprite();
 	}
 
-    private void Populate()
+    public void SetPlayer(Player player)
     {
-        f = Facing.S;
-        CurrentLocation = new Vector2(15,2);
+        this.player = player;
+    }
 
-        //So umm... You see.... This was done with a...
+    private void Populate()
+    { 
+       //So umm... You see.... This was done with a...
         // Map generator, YAS!
 
 
@@ -69,15 +72,16 @@ public class MapController : MonoBehaviour {
 
     public void Move()
     {
-        
-       
+        var CurrentLocation = player.CurrentLocation;
+        var f = player.FacingDirection;
         switch (f)
         {
             case Facing.N:
                 if (Map[(int)CurrentLocation.x - 1, (int)CurrentLocation.y] != 0)
                 {
                     CurrentLocation.x--;
-                  
+                    player.CurrentLocation = CurrentLocation;
+
                     hintManager.ShowHint(CurrentLocation, (int)f);
 
                 }
@@ -86,16 +90,18 @@ public class MapController : MonoBehaviour {
                 if (Map[(int)CurrentLocation.x, (int)CurrentLocation.y - 1] != 0 )
                 {
                     CurrentLocation.y--;
+                    player.CurrentLocation = CurrentLocation;
 
-                        hintManager.ShowHint(CurrentLocation, (int)f);
+                    hintManager.ShowHint(CurrentLocation, (int)f);
                 }
                 break;
             case Facing.S:
                 if (Map[(int)CurrentLocation.x + 1, (int)CurrentLocation.y] != 0 )
                 {
                     CurrentLocation.x++;
+                    player.CurrentLocation = CurrentLocation;
 
-                        hintManager.ShowHint(CurrentLocation, (int)f);
+                    hintManager.ShowHint(CurrentLocation, (int)f);
 
                 }
                 break;
@@ -103,8 +109,9 @@ public class MapController : MonoBehaviour {
                 if (Map[(int)CurrentLocation.x, (int)CurrentLocation.y + 1] != 0)
                 {
                     CurrentLocation.y++;
+                    player.CurrentLocation = CurrentLocation;
 
-                        hintManager.ShowHint(CurrentLocation, (int)f);
+                    hintManager.ShowHint(CurrentLocation, (int)f);
 
                 }
                 break;
@@ -121,12 +128,12 @@ public class MapController : MonoBehaviour {
     public void RoL()
     {
         //Swap direction Left
-        if (f == Facing.E)
-            f = Facing.N;
+        if (player.FacingDirection == Facing.E)
+            player.FacingDirection = Facing.N;
         else
-            f++;
+            player.FacingDirection++;
 
-        hintManager.ShowHint(CurrentLocation, (int)f);
+        hintManager.ShowHint(player.CurrentLocation, (int)player.FacingDirection);
 
         LoadNewSprite();
     }
@@ -134,12 +141,12 @@ public class MapController : MonoBehaviour {
     public void RoR()
     {
         ///Swap direction Left
-        if (f == Facing.N)
-            f = Facing.E;
+        if (player.FacingDirection == Facing.N)
+            player.FacingDirection = Facing.E;
         else
-            f--;
+            player.FacingDirection--;
 
-        hintManager.ShowHint(CurrentLocation, (int)f);
+        hintManager.ShowHint(player.CurrentLocation, (int)player.FacingDirection);
 
         LoadNewSprite();
     }
@@ -149,6 +156,8 @@ public class MapController : MonoBehaviour {
         bool r = false;
         bool u = false;
         bool l = false;
+        var f = player.FacingDirection;
+        var CurrentLocation = player.CurrentLocation;
         switch (f)
         {
             case Facing.N:
