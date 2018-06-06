@@ -19,7 +19,12 @@ public class Mouse : MonoBehaviour {
 	}
     void OnMouseDown()
     {
-        hint.transform.GetChild(1).GetComponent<Text>().text = manager.getText(0);
+        if(GameManager.player.CurrentLocation.x == 11 && GameManager.player.CurrentLocation.y == 3)
+            hint.transform.GetChild(1).GetComponent<Text>().text = manager.getText(0);
+        if (GameManager.player.CurrentLocation.x == 22 && GameManager.player.CurrentLocation.y == 18)
+            hint.transform.GetChild(1).GetComponent<Text>().text = manager.getText(1);
+        if (GameManager.player.CurrentLocation.x == 14 && GameManager.player.CurrentLocation.y == 22)
+            hint.transform.GetChild(1).GetComponent<Text>().text = manager.getText(2);
         hint.SetActive(true);
     }
 }

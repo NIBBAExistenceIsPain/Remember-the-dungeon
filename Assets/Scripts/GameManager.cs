@@ -40,6 +40,12 @@ public class GameManager : MonoBehaviour
     public static void Play(string playerName)
     {
         player = new Player(playerName, 3);
+        SceneManager.LoadScene(3);
+    }
+
+    public static void StartGame()
+    {
+        
         SceneManager.LoadScene(1);
     }
 

@@ -21,7 +21,12 @@ public class NewBehaviourScript : MonoBehaviour {
     public void Killme()
     {
         this.gameObject.SetActive(false);
-        manager.setRead(0);
+        if (GameManager.player.CurrentLocation.x == 11 && GameManager.player.CurrentLocation.y == 3)
+            manager.setRead(0);
+        if (GameManager.player.CurrentLocation.x == 22 && GameManager.player.CurrentLocation.y == 18)
+            manager.setRead(1);
+        if (GameManager.player.CurrentLocation.x == 14 && GameManager.player.CurrentLocation.y == 22)
+            manager.setRead(2);
         hint.SetActive(false);
     }
 }

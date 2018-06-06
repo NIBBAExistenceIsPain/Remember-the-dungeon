@@ -11,5 +11,6 @@ public class Sprites : MonoBehaviour {
     public Sprite FR;
     public Sprite LR;
     public Sprite FLR;
+    public Sprite deadEnd;
 
 }

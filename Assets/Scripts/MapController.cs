@@ -200,7 +200,7 @@ public class MapController : MonoBehaviour {
         else if (!r && u && !l)
             MapSprite.GetComponent<SpriteRenderer>().sprite = Sprites.F;
         else if (!r && !u && !l)
-            MapSprite.GetComponent<SpriteRenderer>().sprite = null;
+            MapSprite.GetComponent<SpriteRenderer>().sprite = Sprites.deadEnd;
 
         
 
